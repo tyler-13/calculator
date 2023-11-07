@@ -17,7 +17,7 @@ let enterNewNum = true;
 
 function evaluate() {
     if (operator === "+") {
-        result = parseInt(num1) + parseInt(num2);
+        result = parseFloat(num1) + parseFloat(num2);
     } else if (operator === "-") {
         result = num1 - num2;
     } else if (operator === '/') {
@@ -69,6 +69,7 @@ equalsBtn.addEventListener('click' , () => {
     num1 = ''
     num2 = ''
     display.textContent = result;
+    enterNewNum = true;
 })
 
 clearBtn.addEventListener('click' , () => {
