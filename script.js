@@ -6,21 +6,24 @@ const operatorButtons = document.querySelectorAll('.operator-buttons button');
 const clearBtn = document.querySelector('#clear');
 const equalsBtn = document.querySelector('#equals');
 
-let num1;
-let num2;
-let operator;
-let result;
+let num1 = '';
+let num2 = '';
+let operator = '';
+let result = '';
+let enterNewNum = true;
+
+
 
 
 function evaluate() {
     if (operator === "+") {
-        result = parseInt(num1) + parseInt(num2)
+        result = parseInt(num1) + parseInt(num2);
     } else if (operator === "-") {
         result = num1 - num2;
     } else if (operator === '/') {
-        result = num1/num2;
+        result = Math.round((num1 / num2) * 10000) / 10000;
     } else if (operator = 'x') {
-        result = num1 * num2;
+        result = Math.round((num1 * num2) * 10000) / 10000;
     }
 }
 
@@ -28,15 +31,35 @@ function evaluate() {
 
 numButtons.forEach((button) => {
     button.addEventListener('click', () => {
-        display.textContent = display.textContent + button.textContent;
-    })
+        if (enterNewNum) {
+            display.textContent = '';
+            display.textContent = display.textContent + button.textContent;
+            enterNewNum = false;
+        } else {
+            display.textContent = display.textContent + button.textContent; 
+        }
+        })
+        
 })
 
 operatorButtons.forEach((button) => {
     button.addEventListener('click', () => {
-        num1 = display.textContent;
-        operator = button.textContent;
-        display.textContent = '';
+        if (num1 != '') {
+            num2 = display.textContent;
+            evaluate();
+            display.textContent = result;
+            num1 = display.textContent;
+            operator = button.textContent;
+            enterNewNum = true;
+            
+        } else {
+            num1 = display.textContent;
+            operator = button.textContent;
+            display.textContent = '';
+            enterNewNum = true;
+        }
+
+        
     })
 })
 
